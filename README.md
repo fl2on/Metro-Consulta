@@ -4,6 +4,10 @@
 
 Este es un ejemplo de una página web básica para realizar consultas de saldo de una tarjeta MetroBus (MiBus Que es el Sistema de Transporte Público en Panamá) utilizando Cross-Origin Resource Sharing (CORS). La página permite ingresar el número de tarjeta y consultar su saldo, mostrando información detallada sobre la tarjeta y sus movimientos.
 
+# ScreenShot
+
+![image](https://github.com/qzxtu/Metro-Consulta/assets/69091361/7c399ce6-06bc-4a15-b079-4aac711e6390)
+
 ## Tecnologías utilizadas
 
 - HTML5
