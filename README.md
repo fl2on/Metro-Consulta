@@ -1,4 +1,4 @@
-![image](https://github.com/qzxtu/Consulta-de-Saldo-MetroBus/assets/69091361/44155f1d-200f-4c00-a849-82f0a31b8a7f)
+![image](https://github.com/qzxtu/Metro-Consulta/assets/69091361/7ad85498-d438-4b12-962d-402f41d14414)
 
 # (Metro Consulta) Página Web Básica de Ejemplo Para Test de Cross-Origin (CORS)
 
