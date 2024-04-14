@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metro Consulta</title>
+    
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Consulta de Saldo (MiBus)">
+    <!-- Open Graph (OG) meta tags -->
+    <meta property="og:title" content="Metro Consulta)">
+    <meta property="og:description" content="Consulta de Saldo (MiBus)">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qzxtu.github.io/Consulta-de-Saldo-MetroBus/">
+    <meta property="og:image" content="https://raw.githubusercontent.com/qzxtu/Consulta-de-Saldo-MetroBus/main/favicon.png">
+    <!-- Twitter meta tags -->
+    <meta property="twitter:card" content="https://raw.githubusercontent.com/qzxtu/Consulta-de-Saldo-MetroBus/main/bannertw.png">
+    <meta property="twitter:title" content="Metro Consulta">
+    <meta property="twitter:description" content="Consulta de Saldo (MiBus)">
+    <meta property="twitter:image" content="https://raw.githubusercontent.com/qzxtu/Consulta-de-Saldo-MetroBus/main/bannertw.png">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/qzxtu/Consulta-de-Saldo-MetroBus/main/favicon.png" type="image/x-icon">
+    <!-- Additional meta tags for SEO -->
+    <meta name="robots" content="index, follow">
+    <meta name="keywords" content="metrobus, mibus, metro, panama">
+    <meta name="author" content="qzxtu">
+    
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7fafc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            color: #1a202c;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #edf2f7;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+
+        .card p {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: #4a5568;
+        }
+
+        .button {
+            background-color: #4f46e5;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #4338ca;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .bus-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .saldo-progress {
+            width: 100%;
+            height: 20px;
+            background-color: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .saldo-progress-bar {
+            width: 0;
+            height: 100%;
+            background-color: #10b981;
+            transition: width 0.5s ease;
+        }
+
+        .saldo-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            color: #4b5563;
+            font-size: 0.8rem;
+        }
+
+        .movimiento {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .movimiento p {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .green-text {
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .red-text {
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        /* Additional Styles */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        @media screen and (max-width: 640px) {
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <img src="https://raw.githubusercontent.com/qzxtu/Consulta-de-Saldo-MetroBus/main/banner.png" alt="Bus Metrobus" class="bus-image">
+            <label for="numeroTarjeta" class="block text-sm font-medium text-gray-700">Número de tarjeta</label>
+            <input type="text" id="numeroTarjeta" class="input-field" placeholder="Número de tarjeta">
+            <button class="button" onclick="consultarTarjeta()">Consultar</button>
+        </div>
+        <div id="info" class="card"></div>
+        <div id="grafico" class="card"></div>
+        <div id="movimientos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
+    </div>
+
+    <script>
+        function consultarTarjeta() {
+            const numeroTarjeta = document.getElementById('numeroTarjeta').value;
+            const url = `https://corsproxy.io/?https://saldometrobus.yizack.com/api/v2/tarjeta/${numeroTarjeta}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const info = document.getElementById('info');
+                    const grafico = document.getElementById('grafico');
+                    const movimientos = document.getElementById('movimientos');
+
+                    info.innerHTML = '';
+                    grafico.innerHTML = '';
+                    movimientos.innerHTML = '';
+
+                    const h2Info = document.createElement('h2');
+                    h2Info.textContent = `Tarjeta: ${data.tarjeta.numero}`;
+
+                    const pInfo1 = document.createElement('p');
+                    pInfo1.textContent = `Saldo Actual: ${data.tarjeta.saldo}`;
+
+                    const pInfo2 = document.createElement('p');
+                    pInfo2.textContent = `Estado: ${data.tarjeta.estado}`;
+
+                    const pInfo3 = document.createElement('p');
+                    pInfo3.textContent = `Fecha del Saldo: ${data.tarjeta.fecha}`;
+
+                    const saldoProgress = document.createElement('div');
+                    saldoProgress.className = 'saldo-progress';
+                    const saldoProgressBar = document.createElement('div');
+                    saldoProgressBar.className = 'saldo-progress-bar';
+                    const saldo = parseFloat(data.tarjeta.saldo);
+                    const saldoText = document.createElement('div');
+                    saldoText.className = 'saldo-text';
+                    saldoText.textContent = `$${saldo.toFixed(2)} / $50`;
+                    saldoProgressBar.style.width = `${(saldo / 50) * 100}%`;
+                    saldoProgress.appendChild(saldoProgressBar);
+                    saldoProgress.appendChild(saldoText);
+
+                    info.appendChild(h2Info);
+                    info.appendChild(pInfo1);
+                    info.appendChild(pInfo2);
+                    info.appendChild(pInfo3);
+                    info.appendChild(saldoProgress);
+
+                    const labels = data.tarjeta.movimientos.map(movimiento => movimiento.fecha_hora);
+                    const gastos = data.tarjeta.movimientos.map(movimiento => movimiento.monto);
+                    const cargas = data.tarjeta.movimientos.map(movimiento => movimiento.tipo === 'Carga' ? movimiento.monto : 0);
+                    const cambioSaldo = data.tarjeta.movimientos.map(movimiento => movimiento.saldo_tarjeta);
+
+                    const canvas = document.createElement('canvas');
+                    canvas.width = 400;
+                    canvas.height = 400;
+                    grafico.appendChild(canvas);
+
+                    const ctx = canvas.getContext('2d');
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                    label: 'Gastos',
+                                    data: gastos,
+                                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                    borderColor: 'rgba(255, 99, 132, 1)',
+                                    borderWidth: 1
+                                },
+                                {
+                                    label: 'Recargas',
+                                    data: cargas,
+                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    borderWidth: 1
+                                },
+                                {
+                                    label: 'Cambio de Saldo',
+                                    data: cambioSaldo,
+                                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                                    borderColor: 'rgba(153, 102, 255, 1)',
+                                    borderWidth: 1
+                                }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+
+                    data.tarjeta.movimientos.forEach((movimiento) => {
+                        const card = document.createElement('div');
+                        card.className = 'movimiento';
+
+                        const h2 = document.createElement('h2');
+                        h2.textContent = `Transacción: ${movimiento.transaccion}`;
+
+                        const p1 = document.createElement('p');
+                        p1.textContent = `Tipo: ${movimiento.tipo}`;
+
+                        const p2 = document.createElement('p');
+                        p2.textContent = `Fecha y hora: ${movimiento.fecha_hora}`;
+
+                        const p3 = document.createElement('p');
+                        p3.textContent = `Monto: ${movimiento.monto}`;
+
+                        const p4 = document.createElement('p');
+                        const saldoTexto = parseFloat(movimiento.monto);
+                        if (movimiento.tipo === 'Carga') {
+                            p4.innerHTML = `Saldo: <span class="green-text">+${saldoTexto.toFixed(2)}</span>`;
+                        } else if (saldoTexto === 0) {
+                            p4.innerHTML = `Saldo: <span style="color:orange">${saldoTexto.toFixed(2)}</span>`;
+                        } else {
+                            p4.innerHTML = `Saldo: <span class="red-text">-${saldoTexto.toFixed(2)}</span>`;
+                        }
+                        const p5 = document.createElement('p');
+                        p5.textContent = `Lugar: ${movimiento.lugar}`;
+
+                        movimientos.appendChild(card);
+                        card.appendChild(h2);
+                        card.appendChild(p1);
+                        card.appendChild(p2);
+                        card.appendChild(p3);
+                        card.appendChild(p4);
+                        card.appendChild(p5);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const info = document.getElementById('info');
+                    info.innerHTML = 'Error al consultar la tarjeta.';
+                });
+        }
+    </script>
+</body>
+</html>
