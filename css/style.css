@@ -1,0 +1,137 @@
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background-color: #f7fafc;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	max-width: 800px;
+	margin: 20px auto;
+	padding: 20px;
+	background-color: #ffffff;
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+	color: #1a202c;
+	font-size: 2rem;
+	text-align: center;
+	margin-bottom: 40px;
+}
+
+.card {
+	padding: 20px;
+	margin-bottom: 20px;
+	background-color: #edf2f7;
+	border-radius: 8px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+	font-size: 1.5rem;
+	font-weight: 700;
+	margin-bottom: 10px;
+	color: #2d3748;
+}
+
+.card p {
+	font-size: 1rem;
+	margin-bottom: 5px;
+	color: #4a5568;
+}
+
+.button {
+	background-color: #4f46e5;
+	color: #fff;
+	padding: 10px 20px;
+	border-radius: 6px;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.button:hover {
+	background-color: #4338ca;
+}
+
+.input-field {
+	width: 100%;
+	padding: 10px;
+	border-radius: 6px;
+	border: 1px solid #d1d5db;
+	margin-bottom: 20px;
+	font-size: 1rem;
+	box-sizing: border-box;
+}
+
+.bus-image {
+	width: 100%;
+	height: auto;
+	margin-bottom: 20px;
+	border-radius: 10px;
+	object-fit: cover;
+}
+
+.saldo-progress {
+	width: 100%;
+	height: 20px;
+	background-color: #e5e7eb;
+	border-radius: 10px;
+	overflow: hidden;
+	margin-bottom: 20px;
+	position: relative;
+}
+
+.saldo-progress-bar {
+	width: 0;
+	height: 100%;
+	background-color: #10b981;
+	transition: width 0.5s ease;
+}
+
+.saldo-text {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 2;
+	color: #4b5563;
+	font-size: 0.8rem;
+}
+
+.movimiento {
+	padding: 10px;
+	margin-bottom: 10px;
+	border-radius: 8px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.movimiento p {
+	font-size: 1rem;
+	margin-bottom: 5px;
+}
+
+.green-text {
+	color: #10b981;
+	font-weight: bold;
+}
+
+.red-text {
+	color: #ef4444;
+	font-weight: bold;
+}
+
+/* Additional Styles */
+.grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: 20px;
+}
+
+@media screen and (max-width: 640px) {
+	.grid {
+		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+	}
+}
