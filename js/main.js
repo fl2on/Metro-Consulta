@@ -1,6 +1,6 @@
 async function consultarTarjeta() {
    const numeroTarjeta = document.getElementById('numeroTarjeta').value;
-   const url = `https://corsproxy.io/?https://saldometrobus.yizack.com/api/v2/tarjeta/${numeroTarjeta}`;
+   const url = `https://corsproxy.io/?url=https://saldometrobus.yizack.com/api/v2/tarjeta/${numeroTarjeta}`;
 
    try {
       const response = await fetch(url);
